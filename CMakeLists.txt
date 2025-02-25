@@ -28,7 +28,6 @@ else()
   link_libraries(hidapi)
 endif()
 
-
 # Debug mode
 # ADD_DEFINITIONS(-D_DEBUG_FLAG)
 
@@ -39,3 +38,15 @@ add_subdirectory(sdk)
 
 # Location of our own source files
 add_subdirectory(src)
+
+# Add Python driver target
+add_custom_target(python_driver ALL
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/python/chessnut_pro.py ${CMAKE_BINARY_DIR}/python/chessnut_pro.py
+  COMMENT "Copying Python driver to build directory"
+)
+
+# Ensure compatibility with Mac OS and Silicon processor
+if(CMAKE_SYSTEM_NAME STREQUAL "Darwin" AND CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
+  message(STATUS "Building for Mac OS with Silicon processor")
+  set(CMAKE_OSX_ARCHITECTURES "arm64")
+endif()
