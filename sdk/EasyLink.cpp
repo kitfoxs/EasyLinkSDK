@@ -345,12 +345,25 @@ bool ChessLink::connect() {
   spdlog::set_level(spdlog::level::debug);
 #endif
   this->reconnected = true;
-  return this->device->connect();
+  std::cout << "ChessLink: Connecting..." << std::endl;
+  if (device) {
+    std::cout << "ChessLink: Device is valid, calling device->connect()" << std::endl;
+    return device->connect();
+  } else {
+    std::cout << "ChessLink: Device is null, skipping device->connect()" << std::endl;
+    return false;
+  }
 }
 
 void ChessLink::disconnect() {
   this->reconnected = false;
-  this->device->disconnect();
+  std::cout << "ChessLink: Disconnecting..." << std::endl;
+  if (device) {
+    std::cout << "ChessLink: Device is valid, calling device->disconnect()" << std::endl;
+    device->disconnect();
+  } else {
+    std::cout << "ChessLink: Device is null, skipping device->disconnect()" << std::endl;
+  }
 }
 
 bool ChessLink::beep(unsigned short frequency, unsigned short duration) {
