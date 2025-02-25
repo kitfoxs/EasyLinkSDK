@@ -517,3 +517,54 @@ Battery level: 100%
 [DEBUG] Disconnecting from chessboard
 $
 ```
+
+### Python Driver for Chessnut Pro on Mac OS with Silicon Processor
+
+#### Installation
+
+To use the Python driver for the Chessnut Pro on Mac OS with a Silicon processor, you need to have Python installed on your system. You can install the required Python dependencies using `pip`:
+
+```shell
+pip install -r requirements.txt
+```
+
+#### Usage
+
+The Python driver is implemented using `ctypes` to interface with the existing C/C++ SDK. You can find the implementation in the `python/chessnut_pro.py` file.
+
+Here is an example of how to use the Python driver:
+
+```python
+import chessnut_pro as chessnut
+
+# Connect to the chessboard
+if chessnut.connect() == 1:
+    print("Successfully connected to chessboard")
+else:
+    print("Failed to connect to chessboard")
+
+# Get the SDK version
+version = chessnut.get_version()
+if version:
+    print(f"SDK version: {version}")
+
+# Get the MCU version
+mcu_version = chessnut.get_mcu_version()
+if mcu_version:
+    print(f"MCU hardware version: {mcu_version}")
+
+# Get the BLE version
+ble_version = chessnut.get_ble_version()
+if ble_version:
+    print(f"BLE hardware version: {ble_version}")
+
+# Get the battery level
+battery_level = chessnut.get_battery()
+if battery_level is not None:
+    print(f"Battery level: {battery_level}%")
+
+# Disconnect from the chessboard
+chessnut.disconnect()
+```
+
+You can find more examples and detailed usage instructions in the `python/chessnut_pro.py` file.
